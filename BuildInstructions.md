@@ -9,12 +9,13 @@ If you check the button 'Grouped' in the GUI, the CMake variables are grouped by
 
 | CMake Name   | Description |
 |--------------|---------|
-| `RESINSIGHT_USE_OPENMP`               | Enable OpenMP multi-core parallel building |
-| `RESINSIGHT_PRIVATE_INSTALL`          | Install as an independent bundle including the necessary Qt libraries |
-| `RESINSIGHT_BUILD_DOCUMENTATION`      | Use Doxygen to create the HTML based API documentation |
-| `RESINSIGHT_OCTAVE_PLUGIN_MKOCTFILE`  | Location of Octave tool mkoctfile used to compile Octave plugins |
-| `RESINSIGHT_OCTAVE_PLUGIN_QMAKE`      | Location of qmake to find Qt include files and libraries used to compile Octave plugins |
-| `RESINSIGHT_OCTAVE_PLUGIN_32_BIT`     | Windows 64-bit: Flag used to control if Octave plugins will be compiled using 32-bit build environment |
+| `RESINSIGHT_USE_OPENMP`                       | Enable OpenMP multi-core parallel building |
+| `RESINSIGHT_PRIVATE_INSTALL`                  | Install as an independent bundle including the necessary Qt libraries |
+| `RESINSIGHT_BUILD_DOCUMENTATION`              | Use Doxygen to create the HTML based API documentation |
+| `RESINSIGHT_OCTAVE_PLUGIN_MKOCTFILE`          | Location of Octave tool mkoctfile used to compile Octave plugins |
+| `RESINSIGHT_OCTAVE_PLUGIN_USE_CUSTOM_QMAKE`   | Use a different Qt specified by `RESINSIGHT_OCTAVE_PLUGIN_QMAKE` for compiling Octave plugins |
+| `RESINSIGHT_OCTAVE_PLUGIN_QMAKE`              | Location of qmake to find Qt include files and libraries used to compile Octave plugins |
+| `RESINSIGHT_OCTAVE_PLUGIN_32_BIT`             | Windows 64-bit: Flag used to control if Octave plugins will be compiled using 32-bit build environment |
 
 #### Build without Octave plugins
 It is possible to compile ResInsight without compiling the Octave plugins. This can be done by specifying blank for the Octave CMake variables. The Octave plugin module will not be build, and CMake will show warnings like 'Failed to find mkoctfile'. This will not break the build or compilation of ResInsight.
