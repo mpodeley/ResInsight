@@ -52,18 +52,29 @@ else()
 endif()
 
 find_program(RESINSIGHT_OCTAVE_PLUGIN_QMAKE NAMES qmake-qt4 qmake)
-if(RESINSIGHT_OCTAVE_PLUGIN_QMAKE)
-    get_filename_component(OCTAVE_QMAKE_DIR ${RESINSIGHT_OCTAVE_PLUGIN_QMAKE} PATH)
 
-    STRING(REPLACE "/bin" "" OCTAVE_QT_ROOT ${OCTAVE_QMAKE_DIR})
+option (RESINSIGHT_OCTAVE_PLUGIN_USE_CUSTOM_QMAKE "Use a different Qt specified by RESINSIGHT_OCTAVE_PLUGIN_QMAKE for compiling Octave plugins" OFF)
 
-    SET(OCTAVE_QT_INCLUDE_DIR            ${OCTAVE_QT_ROOT}/include)
-    SET(OCTAVE_QT_QTCORE_INCLUDE_DIR     ${OCTAVE_QT_ROOT}/include/QtCore)
-    SET(OCTAVE_QT_QTNETWORK_INCLUDE_DIR  ${OCTAVE_QT_ROOT}/include/QtNetwork)
-    SET(OCTAVE_QT_LIBRARY_DIR            ${OCTAVE_QT_ROOT}/lib)
+if (RESINSIGHT_OCTAVE_PLUGIN_USE_CUSTOM_QMAKE)
+    if(RESINSIGHT_OCTAVE_PLUGIN_QMAKE)
+        get_filename_component(OCTAVE_QMAKE_DIR ${RESINSIGHT_OCTAVE_PLUGIN_QMAKE} PATH)
+
+        STRING(REPLACE "/bin" "" OCTAVE_QT_ROOT ${OCTAVE_QMAKE_DIR})
+
+        SET(OCTAVE_QT_INCLUDE_DIR            ${OCTAVE_QT_ROOT}/include)
+        SET(OCTAVE_QT_QTCORE_INCLUDE_DIR     ${OCTAVE_QT_ROOT}/include/QtCore)
+        SET(OCTAVE_QT_QTNETWORK_INCLUDE_DIR  ${OCTAVE_QT_ROOT}/include/QtNetwork)
+        SET(OCTAVE_QT_LIBRARY_DIR            ${OCTAVE_QT_ROOT}/lib)
+    else()
+      message(WARNING "Failed to find Qt to be used to compile Octave plugins, no Octave plugins will be compiled. Please specify RESINSIGHT_OCTAVE_PLUGIN_QMAKE")
+    endif (RESINSIGHT_OCTAVE_PLUGIN_QMAKE)
 else()
-  message(WARNING "Failed to find Qt to be used to compile Octave plugins, no Octave plugins will be compiled. Please specify RESINSIGHT_OCTAVE_PLUGIN_QMAKE")
-endif()
+    SET(RESINSIGHT_OCTAVE_PLUGIN_QMAKE   ${QT_QMAKE_EXECUTABLE})
+    SET(OCTAVE_QT_INCLUDE_DIR            ${QT_INCLUDE_DIR})
+    SET(OCTAVE_QT_QTCORE_INCLUDE_DIR     ${QT_QTCORE_INCLUDE_DIR})
+    SET(OCTAVE_QT_QTNETWORK_INCLUDE_DIR  ${QT_QTNETWORK_INCLUDE_DIR})
+    SET(OCTAVE_QT_LIBRARY_DIR            ${QT_LIBRARY_DIR})
+endif (RESINSIGHT_OCTAVE_PLUGIN_USE_CUSTOM_QMAKE)
 
 
 # Clear the list of binary oct files to be produced
